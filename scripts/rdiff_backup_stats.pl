@@ -105,6 +105,27 @@ if($no_mir == 1)
 		exit(3);
 	}
 
+	if($command eq "ts" or $command eq "cs"){
+
+	    if(!open(FILE, "< $stats_fn"))
+	    {
+		$debug .= "ERROR: Could not open stat file\n";
+		$result = "0";
+		print_results();
+		exit(3);
+	    }
+
+	    <FILE>;<FILE>;<FILE>;<FILE>;
+	    $size_now = <FILE>;
+	    ($size_now) = $size_now =~ /SourceFileSize (.*) \(.*\)$/;
+
+	    <FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;
+	    ($size_change) = <FILE> =~ /TotalDestinationSizeChange (.*) \(.*\)$/;
+	
+	    $size_change = int($size_change /= 1048576);
+	
+	}
+	
 	if($command eq "st"){
 	
 	    $debug .= "stats - starttime (cca) \n";
@@ -114,18 +135,6 @@ if($no_mir == 1)
 	}
 	elsif($command eq "ts"){
 	
-	    if(!open(FILE, "< $stats_fn"))
-	    {
-		$debug .= "ERROR: Could not open stat file\n";
-		$result = "0";
-		print_results();
-		exit(3);
-	    }
-	
-	    <FILE>;<FILE>;<FILE>;<FILE>;
-	    $size_now = <FILE>;
-	    ($size_now) = $size_now =~ /SourceFileSize (.*) \(.*\)$/;
-	
 	    $size_now = int($size_now /= 1048576);
 	
 	    $debug .= "Total size...(in MB)\n";
@@ -133,19 +142,6 @@ if($no_mir == 1)
 	    print_results();
 	}
 	elsif($command eq "cs"){
-	
-	    if(!open(FILE, "< $stats_fn"))
-	    {
-		$debug .= "ERROR: Could not open stat file\n";
-		$result = "0";
-		print_results();
-		exit(3);
-	    }
-	
-	    <FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;
-	    ($size_change) = <FILE> =~ /TotalDestinationSizeChange (.*) \(.*\)$/;
-	
-	    $size_change = int($size_change /= 1048576);
 	
 	    $debug .= "Change size...(in MB)\n";
 	    $result = $size_change;
