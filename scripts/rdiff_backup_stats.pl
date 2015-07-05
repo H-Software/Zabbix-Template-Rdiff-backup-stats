@@ -33,6 +33,7 @@ use Getopt::Std;
 use File::Basename;
 
 sub usage();
+sub print_results();
 sub running();
 my @date;
 my @mir_list;
@@ -49,35 +50,48 @@ my $pid_2;
 my $size_now;
 my $size_change;
 my $debug;
+my $debug_show;
 #my $err = 0;
-my $command = $ARGV[2];
+my $command = "";
+
 my $result;
+
+usage if(!@ARGV);
+
+if (!getopts( "r:d:c:", \%opts ))
+{
+  print "ERROR: getopts failed!";
+  exit 1;
+}
+
+if(exists($opts{d})){
+  if($opts{d} eq "yes"){
+    $debug_show = 1;
+  }
+}
+
+if( exists($opts{c})){
+  $command = $opts{c};
+}
 
 if($<)
 {
 	$debug .= "ERROR: Must run as root\n";
-	print "0\n";
+	$result = "0";
+	print_results();
 	exit(3);
-}
-
-usage if(!@ARGV);
-
-if (!getopts( "r:w:c:l:p:s:e:", \%opts ))
-{
-  print "ERROR: getopts failed!";
-  exit 1;
 }
 
 $repository = "$opts{r}/rdiff-backup-data";
 
 if($command eq ""){
 	print "ERROR: Invalid \"COMMAND\"\n";
+	usage;
 	exit(6);
 }
 
 @mir_list = <$repository/current_mirror*>;
 $no_mir = scalar @mir_list;
-
 
 if($no_mir == 1)
 {
@@ -90,54 +104,64 @@ if($no_mir == 1)
 		print "ERROR: No session statistics file, deleted?";
 		exit(3);
 	}
+
+	if($command eq "st"){
 	
-	#$elapsed = ((time() - $cron_cycle) - stat($cur_mir)->mtime);
+	    $debug .= "stats - starttime (cca) \n";
+	    $result = stat($cur_mir)->mtime;
+	    print_results();
 	
-	print "stats - starttime (cca) \n";
-	print stat($cur_mir)->mtime;
-	print "\n";
+	}
+	elsif($command eq "ts"){
 	
-	if(!open(FILE, "< $stats_fn"))
-	{
+	    if(!open(FILE, "< $stats_fn"))
+	    {
 		$debug .= "ERROR: Could not open stat file\n";
-		print "0\n";
+		$result = "0";
+		print_results();
 		exit(3);
+	    }
+	
+	    <FILE>;<FILE>;<FILE>;<FILE>;
+	    $size_now = <FILE>;
+	    ($size_now) = $size_now =~ /SourceFileSize (.*) \(.*\)$/;
+	
+	    $size_now = int($size_now /= 1048576);
+	
+	    $debug .= "Total size...(in MB)\n";
+	    $result = $size_now;
+	    print_results();
 	}
+	elsif($command eq "cs"){
 	
-	<FILE>;<FILE>;<FILE>;<FILE>;
-	$size_now = <FILE>;
-	($size_now) = $size_now =~ /SourceFileSize (.*) \(.*\)$/;
+	    if(!open(FILE, "< $stats_fn"))
+	    {
+		$debug .= "ERROR: Could not open stat file\n";
+		$result = "0";
+		print_results();
+		exit(3);
+	    }
 	
-	$size_now = int($size_now /= 1048576);
-	print "Total size...(in MB)\n";
-	print $size_now;
-	print "\n";
+	    <FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;
+	    ($size_change) = <FILE> =~ /TotalDestinationSizeChange (.*) \(.*\)$/;
+	
+	    $size_change = int($size_change /= 1048576);
+	
+	    $debug .= "Change size...(in MB)\n";
+	    $result = $size_change;
+	    print_results();
+	}
+	elsif($command eq "status"){
+	
+	    $elapsed = localtime(stat($stats_fn)->mtime);
+	
+	    $debug .= "OK: Last backup finished ".$elapsed."\n";
+	    $result = "1";
+	    print_results();
+	}
 
-	<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;
-	($size_change) = <FILE> =~ /TotalDestinationSizeChange (.*) \(.*\)$/;
-	
-	$size_change = int($size_change /= 1048576);
-	print "Change size...(in MB)\n";
-	print $size_change;
-	print "\n";
-
-	$elapsed = localtime(stat($stats_fn)->mtime);
-	
-	$debug .= "OK: Last backup finished ".$elapsed.". Size change ". $size_change." MB\n";
-	$result = "1";
-	
-	if($command eq "status"){
-	    print $result . "\n";
-	}
-	else{
-	    print "ERROR: Unknown mode! \n";
-	}
-	
-	if($opts{d}){
-	    print $debug;
-	}
-	
 	exit(0);
+
 }
 
 if($no_mir == 2)
@@ -191,8 +215,9 @@ if($no_mir == 2)
 	exit(2);
 }
 
-$debug .= "ERROR: Neither one current mirror, nor two";
-print "0\n";
+$debug .= "ERROR: Neither one current mirror, nor two\n";
+$result = "0";
+print_results();
 exit(3);
 
 sub running()
@@ -220,16 +245,36 @@ sub running()
 	exit(0);
 }
 
+sub print_results(){
+
+	if($command eq "status"){
+	    print $result . "\n";
+	}
+	elsif($command eq "st" or $command eq "ts" or $command eq "cs"){
+	    print $result . "\n";
+	}
+	else{
+	    print "ERROR: Unknown \"command\" \n";
+	}
+	
+	if($debug_show){
+	    print $debug;
+	}
+
+}
+
 sub usage()
 {
 	print "Usage: rdiff_backup_stats.pl [OPTIONS] [COMMAND]\n
       OPTIONS:
 	-r <rdiff repository>
-	-d <debug>\n
-      COMMAND:
+	-d <yes|no>
+	-c <command>\n
+      COMMANDS:
 	status <status of backup>
-	ct <change size>
-	ts <total size"
+	cs <change size>
+	ts <total size>
+	st <start time"
 	.">\n";
 	exit(3);
 }
