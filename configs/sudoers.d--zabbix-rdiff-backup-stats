@@ -1,0 +1,8 @@
+# for zabbix monitoring
+#
+Defaults:zabbix !requiretty
+#
+zabbix  ALL=(ALL)       NOPASSWD: /etc/zabbix/plugins/discover.rdiff-repos.pl
+zabbix  ALL=(ALL)       NOPASSWD: /etc/zabbix/plugins/rdiff_backup_stats.pl *
+
+
