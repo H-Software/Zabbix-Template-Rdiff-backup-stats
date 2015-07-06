@@ -38,7 +38,7 @@ foreach(@files){
 
   print "\t{\n";
   print "\t\t\"{#NAME}\":\"".$name."\",\n";
-  print "\t\t\"{#FULLNAME}\":\"".$full_name."\",\n";
+  print "\t\t\"{#FULLNAME}\":\"".$full_name."\"\n";
   print "\t}\n";
 
 } #end of foreach @files
