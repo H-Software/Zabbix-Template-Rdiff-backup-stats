@@ -10,7 +10,7 @@
 $scan_folder = "/var/data/rdiff-backup";
 $scan_prefix = "bc-rdiff";
 
-my @find_cmd = ("find", $scan_folder, "-maxdepth", "1", "-name", "$scan_prefix*", "-type", "d");
+my @find_cmd = ("find", "$scan_folder/", "-maxdepth", "1", "-name", "$scan_prefix*", "-type", "d");
 
 open FIND, "-|", @find_cmd;
 
