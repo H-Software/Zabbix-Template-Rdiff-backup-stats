@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>2.0</version>
-    <date>2015-07-06T09:17:23Z</date>
+    <date>2015-07-09T14:22:44Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -29,7 +29,7 @@
                     <snmp_community/>
                     <snmp_oid/>
                     <key>custom.rdiff.discovery</key>
-                    <delay>60</delay>
+                    <delay>36</delay>
                     <status>0</status>
                     <allowed_hosts/>
                     <snmpv3_contextname/>
@@ -59,13 +59,13 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>custom.rdiff.change_size[{#FULLNAME}]</key>
-                            <delay>60</delay>
+                            <delay>3600</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
                             <value_type>0</value_type>
                             <allowed_hosts/>
-                            <units>MB</units>
+                            <units>Bytes</units>
                             <delta>0</delta>
                             <snmpv3_contextname/>
                             <snmpv3_securityname/>
@@ -101,7 +101,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>custom.rdiff.status[{#FULLNAME}]</key>
-                            <delay>60</delay>
+                            <delay>3600</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
@@ -143,13 +143,13 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>custom.rdiff.total_size[{#FULLNAME}]</key>
-                            <delay>60</delay>
+                            <delay>3600</delay>
                             <history>90</history>
                             <trends>365</trends>
                             <status>0</status>
                             <value_type>0</value_type>
                             <allowed_hosts/>
-                            <units>MB</units>
+                            <units>Bytes</units>
                             <delta>0</delta>
                             <snmpv3_contextname/>
                             <snmpv3_securityname/>
@@ -190,4 +190,3 @@
         </template>
     </templates>
 </zabbix_export>
-
