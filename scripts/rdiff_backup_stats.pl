@@ -21,6 +21,10 @@
 #NEW INFO
 #############################################################################
 
+# rdiff_backup_stats.pl v0.2 #
+
+#fixed output error printing
+
 # rdiff_backup_stats.pl v0.1 #
 
 # This is rewritten plugin for zabbix to check and collect statistics of
@@ -101,7 +105,8 @@ if($no_mir == 1)
 
 	if(!-f $stats_fn)
 	{
-		print "ERROR: No session statistics file, deleted?";
+		$debug .= "ERROR: No session statistics file, deleted?";
+		$result = "0";
 		exit(3);
 	}
 
@@ -167,7 +172,8 @@ if($no_mir == 2)
 	
 	if(!defined $pid_1)
 	{
-		print "CRITICAL: Really broken repository\n";
+		$debug .= "CRITICAL: Really broken repository\n";
+		$result = "0";
 		exit(3);
 	}
 	
@@ -181,7 +187,8 @@ if($no_mir == 2)
 	
 	if(!defined $pid_2)
 	{
-		print "CRITICAL: Really broken repository\n";
+		$debug .= "CRITICAL: Really broken repository\n";
+		$result = "0";
 		exit(2);
 	}
 
@@ -189,7 +196,8 @@ if($no_mir == 2)
 	{
 		if(!open(FILE, "< /proc/$pid_1/cmdline"))
 		{
-			print "ERROR: Couldn't open cmdline file, permissions?\n";
+			$debug .= "ERROR: Couldn't open cmdline file, permissions?\n";
+			$result = "0";
 			exit(3);
 		}
 		$pid_1 = <FILE>;
@@ -200,14 +208,16 @@ if($no_mir == 2)
 	{
 		if(!open(FILE, "< /proc/$pid_2/cmdline"))
 		{
-			print "ERROR: Couldn't open cmdline file, permissions?\n";
+			$debug .= "ERROR: Couldn't open cmdline file, permissions?\n";
+			$result = "0";
 			exit(3);
 		}
 		$pid_2 = <FILE>;
 		running() if ($pid_2 =~ /rdiff-backup/);
 	}
 	
-	print "CRITICAL: Backup interrupted";
+	$debug .= "CRITICAL: Backup interrupted";
+	$result = "0";
 	exit(2);
 }
 
