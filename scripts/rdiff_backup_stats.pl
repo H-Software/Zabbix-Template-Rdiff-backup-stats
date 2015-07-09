@@ -127,7 +127,7 @@ if($no_mir == 1)
 	    <FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;<FILE>;
 	    ($size_change) = <FILE> =~ /TotalDestinationSizeChange (.*) \(.*\)$/;
 	
-	    $size_change = int($size_change /= 1048576);
+	    #$size_change = int($size_change /= 1048576);
 	
 	}
 	
@@ -140,15 +140,15 @@ if($no_mir == 1)
 	}
 	elsif($command eq "ts"){
 	
-	    $size_now = int($size_now /= 1048576);
+	    #$size_now = int($size_now /= 1048576);
 	
-	    $debug .= "Total size...(in MB)\n";
+	    $debug .= "Total size...\n";
 	    $result = $size_now;
 	    print_results();
 	}
 	elsif($command eq "cs"){
 	
-	    $debug .= "Change size...(in MB)\n";
+	    $debug .= "Change size...\n";
 	    $result = $size_change;
 	    print_results();
 	}
