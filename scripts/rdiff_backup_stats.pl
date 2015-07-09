@@ -135,7 +135,7 @@ if($no_mir == 1)
 	if($command eq "st"){
 	
 	    $debug .= "stats - starttime (cca) \n";
-	    $result = stat($cur_mir)->mtime;
+	    $result = localtime(stat($cur_mir)->mtime);
 	    print_results();
 	
 	}
