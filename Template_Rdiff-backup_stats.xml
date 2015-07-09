@@ -248,7 +248,7 @@
             <macros>
                 <macro>
                     <macro>{$RDIFF_MIN_CHANGE}</macro>
-                    <value>1073741824</value>
+                    <value>1048576</value>
                 </macro>
             </macros>
             <templates/>
