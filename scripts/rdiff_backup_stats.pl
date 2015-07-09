@@ -107,6 +107,7 @@ if($no_mir == 1)
 	{
 		$debug .= "ERROR: No session statistics file, deleted?";
 		$result = "0";
+		print_results();
 		exit(3);
 	}
 
@@ -174,6 +175,7 @@ if($no_mir == 2)
 	{
 		$debug .= "CRITICAL: Really broken repository\n";
 		$result = "0";
+		print_results();
 		exit(3);
 	}
 	
@@ -189,6 +191,7 @@ if($no_mir == 2)
 	{
 		$debug .= "CRITICAL: Really broken repository\n";
 		$result = "0";
+		print_results();
 		exit(2);
 	}
 
@@ -198,6 +201,7 @@ if($no_mir == 2)
 		{
 			$debug .= "ERROR: Couldn't open cmdline file, permissions?\n";
 			$result = "0";
+			print_results();
 			exit(3);
 		}
 		$pid_1 = <FILE>;
@@ -210,6 +214,7 @@ if($no_mir == 2)
 		{
 			$debug .= "ERROR: Couldn't open cmdline file, permissions?\n";
 			$result = "0";
+			print_results();
 			exit(3);
 		}
 		$pid_2 = <FILE>;
@@ -218,6 +223,7 @@ if($no_mir == 2)
 	
 	$debug .= "CRITICAL: Backup interrupted";
 	$result = "0";
+	print_results();
 	exit(2);
 }
 
