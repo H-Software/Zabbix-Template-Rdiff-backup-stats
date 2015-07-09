@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>2.0</version>
-    <date>2015-07-09T14:45:36Z</date>
+    <date>2015-07-09T15:02:10Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -221,12 +221,36 @@
                             <valuemap/>
                         </item_prototype>
                     </item_prototypes>
-                    <trigger_prototypes/>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&lt;1073741824</expression>
+                            <name>Rdiff-backup - backup change size is LOW on {#NAME}</name>
+                            <url/>
+                            <status>0</status>
+                            <priority>2</priority>
+                            <description/>
+                            <type>0</type>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Template_Rdiff-backup_stats:custom.rdiff.status[{#FULLNAME}].last(#3)}#1</expression>
+                            <name>Rdiff-backup - backup failed on {#NAME}</name>
+                            <url/>
+                            <status>0</status>
+                            <priority>4</priority>
+                            <description/>
+                            <type>0</type>
+                        </trigger_prototype>
+                    </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
                 </discovery_rule>
             </discovery_rules>
-            <macros/>
+            <macros>
+                <macro>
+                    <macro>{$RDIFF_MIN_CHANGE}</macro>
+                    <value>1073741824</value>
+                </macro>
+            </macros>
             <templates/>
             <screens/>
         </template>
