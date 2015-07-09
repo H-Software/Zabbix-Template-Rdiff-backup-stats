@@ -105,7 +105,7 @@ if($no_mir == 1)
 
 	if(!-f $stats_fn)
 	{
-		$debug .= "ERROR: No session statistics file, deleted?";
+		$debug .= "ERROR: No session statistics file, deleted?\n";
 		$result = "0";
 		print_results();
 		exit(3);
@@ -221,7 +221,7 @@ if($no_mir == 2)
 		running() if ($pid_2 =~ /rdiff-backup/);
 	}
 	
-	$debug .= "CRITICAL: Backup interrupted";
+	$debug .= "CRITICAL: Backup interrupted\n";
 	$result = "0";
 	print_results();
 	exit(2);
