@@ -21,6 +21,10 @@
 #NEW INFO
 #############################################################################
 
+# rdiff_backup_stats.pl v0.3 #
+
+#changes in template
+
 # rdiff_backup_stats.pl v0.2 #
 
 #fixed output error printing
