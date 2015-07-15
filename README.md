@@ -1,18 +1,20 @@
 # Zabbix Template Rddiff-backup stats
 
-A Zabbix template for monitoring rdiff-backup stats
+A Zabbix template for monitoring rdiff-backup stats.
 
-It uses Zabbix LLD for scaning directory and parsing session_statics files
+It uses Zabbix LLD for scaning directory and parsing session_statistics files.
+
+Main script based on nagios check.
 
 Tested on:
 
 ```
- CentOS 6.x X86_64
+ CentOS 6.x x86_64
  Zabbix 2.2.x
 ```
 
 ### Authors
-* Patrik Majer <patrik.majer.pisek@gmail.com>
+* Patrik Majer (@czhujer) <patrik.majer.pisek@gmail.com>
 
 
 ### installation - Manual
@@ -32,7 +34,7 @@ Tested on:
 
 ### Monitored items
 
-* T.B.D
+* T.B.D.
 
 ### Docs
 
