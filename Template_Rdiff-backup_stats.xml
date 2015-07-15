@@ -223,7 +223,7 @@
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&lt;{$RDIFF_MIN_CHANGE}</expression>
+                            <expression>{Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&lt;{$RDIFF_MIN_CHANGE} &amp; {Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&gt;0</expression>
                             <name>Rdiff-backup - backup change size is LOW on {#NAME}</name>
                             <url/>
                             <status>0</status>
