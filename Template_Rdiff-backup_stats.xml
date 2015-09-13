@@ -145,7 +145,7 @@
                             <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>custom.rdiff.start_time_timestamp[{#FULLNAME}]</key>
-                            <delay>36</delay>
+                            <delay>3600</delay>
                             <history>30</history>
                             <trends>365</trends>
                             <status>0</status>
