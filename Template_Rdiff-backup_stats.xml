@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>2.0</version>
-    <date>2015-07-15T12:18:06Z</date>
+    <date>2015-09-13T13:52:29Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -29,7 +29,7 @@
                     <snmp_community/>
                     <snmp_oid/>
                     <key>custom.rdiff.discovery</key>
-                    <delay>36</delay>
+                    <delay>86400</delay>
                     <status>0</status>
                     <allowed_hosts/>
                     <snmpv3_contextname/>
@@ -93,6 +93,7 @@
                                 </application>
                             </applications>
                             <valuemap/>
+                            <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
                             <name>Rdiff-backup - start_time on {#NAME}</name>
@@ -135,6 +136,7 @@
                                 </application>
                             </applications>
                             <valuemap/>
+                            <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
                             <name>Rdiff-backup - STATUS on {#NAME}</name>
@@ -177,6 +179,7 @@
                                 </application>
                             </applications>
                             <valuemap/>
+                            <logtimefmt/>
                         </item_prototype>
                         <item_prototype>
                             <name>Rdiff-backup - total_size on {#NAME}</name>
@@ -219,11 +222,12 @@
                                 </application>
                             </applications>
                             <valuemap/>
+                            <logtimefmt/>
                         </item_prototype>
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&lt;-{$RDIFF_MIN_CHANGE} &amp; {Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&lt;0</expression>
+                            <expression>{Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&gt;{$RDIFF_MIN_CHANGE_NEG} &amp; {Template_Rdiff-backup_stats:custom.rdiff.change_size[{#FULLNAME}].last(#3)}&lt;0</expression>
                             <name>Rdiff-backup - backup change size is LOW on {#NAME}</name>
                             <url/>
                             <status>0</status>
@@ -258,6 +262,10 @@
                 <macro>
                     <macro>{$RDIFF_MIN_CHANGE}</macro>
                     <value>1048576</value>
+                </macro>
+                <macro>
+                    <macro>{$RDIFF_MIN_CHANGE_NEG}</macro>
+                    <value>-1048576</value>
                 </macro>
             </macros>
             <templates/>
