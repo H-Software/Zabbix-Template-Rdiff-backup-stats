@@ -21,6 +21,10 @@
 #NEW INFO
 #############################################################################
 
+# rdiff_backup_stats.pl v0.4 #
+
+#add item stt/start time timestamp
+
 # rdiff_backup_stats.pl v0.3 #
 
 #changes in template
@@ -142,6 +146,12 @@ if($no_mir == 1)
 	    $result = localtime(stat($cur_mir)->mtime);
 	    print_results();
 	
+	}
+	elsif($command eq "stt"){
+	
+	    $debug .= "stats - starttime timestamp (cca) \n";
+	    $result = stat($cur_mir)->mtime;
+	    print_results();
 	}
 	elsif($command eq "ts"){
 	
@@ -266,7 +276,7 @@ sub print_results(){
 	if($command eq "status"){
 	    print $result . "\n";
 	}
-	elsif($command eq "st" or $command eq "ts" or $command eq "cs"){
+	elsif($command eq "st" or $command eq "ts" or $command eq "cs" or $command eq "stt"){
 	    print $result . "\n";
 	}
 	else{
@@ -290,7 +300,8 @@ sub usage()
 	status <status of backup>
 	cs <change size>
 	ts <total size>
-	st <start time"
+	st <start time>
+	stt <start time timestamp>"
 	.">\n";
 	exit(3);
 }
