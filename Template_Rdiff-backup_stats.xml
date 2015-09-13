@@ -296,6 +296,15 @@
                             <description/>
                             <type>0</type>
                         </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Template_Rdiff-backup_stats:custom.rdiff.start_time_timestamp[{#FULLNAME}].fuzzytime({$RDIFF_MISSED_SEC})}=0</expression>
+                            <name>Rdiff-backup - backup missed on {#NAME}</name>
+                            <url/>
+                            <status>0</status>
+                            <priority>4</priority>
+                            <description/>
+                            <type>0</type>
+                        </trigger_prototype>
                     </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
@@ -309,6 +318,10 @@
                 <macro>
                     <macro>{$RDIFF_MIN_CHANGE_NEG}</macro>
                     <value>-1048576</value>
+                </macro>
+                <macro>
+                    <macro>{$RDIFF_MISSED_SEC}</macro>
+                    <value>86400</value>
                 </macro>
             </macros>
             <templates/>
